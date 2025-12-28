@@ -1,10 +1,12 @@
 package org.acme.reservation.rest;
 
 import io.quarkus.logging.Log;
+import io.smallrye.graphql.client.GraphQLClient;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import org.acme.reservation.inventory.Car;
+import org.acme.reservation.inventory.GraphQLInventoryClient;
 import org.acme.reservation.inventory.InventoryClient;
 import org.acme.reservation.rental.Rental;
 import org.acme.reservation.rental.RentalClient;
@@ -23,7 +25,8 @@ import java.util.Map;
 @Produces(MediaType.APPLICATION_JSON)
 public class ReservationResource {
     @Inject
-    InventoryClient inventoryClient;
+    @GraphQLClient("inventory")
+    GraphQLInventoryClient inventoryClient;
     @Inject
     ReservationsRepository reservationsRepository;
     @Inject

@@ -1,0 +1,14 @@
+package org.acme.reservation.inventory;
+
+import io.smallrye.graphql.client.GraphQLClient;
+import io.smallrye.graphql.client.typesafe.api.GraphQLClientApi;
+import org.eclipse.microprofile.graphql.Query;
+
+import java.util.List;
+
+@GraphQLClientApi(configKey = "inventory")
+public interface GraphQLInventoryClient extends InventoryClient {
+    @Override
+    @Query("cars")
+    List<Car> allCars();
+}
