@@ -5,6 +5,7 @@ import io.smallrye.graphql.client.GraphQLClient;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.SecurityContext;
 import org.acme.reservation.inventory.Car;
 import org.acme.reservation.inventory.GraphQLInventoryClient;
 import org.acme.reservation.inventory.InventoryClient;
@@ -32,15 +33,17 @@ public class ReservationResource {
     @Inject
     @RestClient
     RentalClient rentalClient;
+    @Inject
+    SecurityContext securityContext;
 
 
     @Consumes(MediaType.APPLICATION_JSON)
     @POST
     public Reservation make(Reservation reservation) {
+        reservation.userId = securityContext.getUserPrincipal() != null ? securityContext.getUserPrincipal().getName() : "anonymous";
         Reservation result = reservationsRepository.save(reservation);
-        String userId = "x";
         if (reservation.startDay.equals(LocalDate.now())) {
-            Rental rental = rentalClient.start(userId, result.id);
+            Rental rental = rentalClient.start(reservation.userId, result.id);
             Log.info("Start rental: " + rental);
         }
         return result;
