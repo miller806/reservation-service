@@ -2,6 +2,7 @@ package org.acme.reservation.inventory;
 
 import io.smallrye.graphql.client.GraphQLClient;
 import io.smallrye.graphql.client.typesafe.api.GraphQLClientApi;
+import io.smallrye.mutiny.Uni;
 import org.eclipse.microprofile.graphql.Query;
 
 import java.util.List;
@@ -10,5 +11,5 @@ import java.util.List;
 public interface GraphQLInventoryClient extends InventoryClient {
     @Override
     @Query("cars")
-    List<Car> allCars();
+    Uni<List<Car>> allCars();
 }

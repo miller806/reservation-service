@@ -1,7 +1,9 @@
 package org.acme.reservation.inventory;
 
+import io.smallrye.mutiny.Uni;
+
 import java.util.List;
 
 public interface InventoryClient {
-    List<Car> allCars();
+    Uni<List<Car>> allCars();
 }

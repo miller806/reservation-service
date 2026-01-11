@@ -11,7 +11,7 @@ import java.time.LocalDate;
  */
 @Data
 public class Rental {
-    private final Long id;
+    private final String id;
     private final String userId;
     private final Long reservationId;
     private final LocalDate startDate;
